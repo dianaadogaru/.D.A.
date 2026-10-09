@@ -12,129 +12,150 @@
 
   <style>
     
-    @font-face {
-      font-family: 'Harlow Solid Italic';
-      src: url('HARLOWSI.TTF') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
+@font-face {
+  font-family: 'Harlow Solid Italic';
+  src: url('HARLOWSI.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    body {
-      font-family: 'Harlow Solid Italic', 'Satisfy', cursive, sans-serif;
-      font-weight: normal; 
-      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
+/* 1. Background setup with your image */
+body {
+  font-family: 'Harlow Solid Italic', 'Satisfy', cursive, sans-serif;
+  font-weight: normal;
+  /* Dark overlay + 1.jpg image */
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.35)), url('1.jpg');
+  background-size: cover;
+  background-position: center bottom; /* Focuses on the horizon & aurora */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
 
-    .card {
-      background: #ffffff;
-      max-width: 420px;
-      width: 100%;
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-      text-align: center;
-    }
+/* 2. Dark Frosted Glass Card with Cold Emerald Glow */
+.card {
+  background: rgba(13, 22, 33, 0.72); /* Translucent dark navy */
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  max-width: 420px;
+  width: 100%;
+  border-radius: 24px;
+  padding: 28px;
+  text-align: center;
+  
+  /* Cold icy border */
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  
+  /* Soft Cold Glow: Layered aurora green shadow + ambient dark drop shadow */
+  box-shadow: 
+    0 0 25px rgba(52, 211, 153, 0.25), 
+    0 15px 35px rgba(0, 0, 0, 0.5);
+}
 
-    .title {
-      font-family: 'Harlow Solid Italic', 'Satisfy', cursive, sans-serif;
-      font-size: 3.5rem;
-      font-weight: normal;
-      margin-bottom: 16px;
-      color: #1a202c;
-    }
+/* 3. Text colors tuned for Dark Mode */
+.title {
+  font-family: 'Harlow Solid Italic', 'Satisfy', cursive, sans-serif;
+  font-size: 3rem;
+  font-weight: normal;
+  margin-bottom: 16px;
+  color: #ffffff;
+  /* Subtle cold text-shadow to make title pop */
+  text-shadow: 0 0 12px rgba(52, 211, 153, 0.4);
+}
 
-    .media-wrapper {
-      position: relative;
-      width: 100%;
-      border-radius: 14px;
-      overflow: hidden;
-      margin-bottom: 16px;
-      background-color: #edf2f7;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
+.media-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 18px;
+  background-color: #0d1621;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
 
-    
-    .reveal-img {
-      width: 100%;
-      height: auto;
-      display: block;
-      -webkit-filter: blur(40px) scale(1.08);
-      filter: blur(40px) scale(1.08);
-      transition: -webkit-filter 0.8s ease, filter 0.8s ease, transform 0.8s ease;
-    }
+/* 40px Mystery Blur */
+.reveal-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  -webkit-filter: blur(40px) scale(1.08);
+  filter: blur(40px) scale(1.08);
+  transition: -webkit-filter 0.8s ease, filter 0.8s ease, transform 0.8s ease;
+}
 
-    .reveal-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.35);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #ffffff;
-      font-weight: normal;
-      font-size: 2.5rem;
-      letter-spacing: 0.5px;
-      transition: opacity 0.6s ease;
-      backdrop-filter: blur(2px);
-      z-index: 2;
-    }
+.reveal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 18, 26, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-weight: normal;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+  transition: opacity 0.6s ease;
+  backdrop-filter: blur(2px);
+  z-index: 2;
+}
 
-    .media-wrapper.revealed .reveal-img {
-      -webkit-filter: blur(0) scale(1);
-      filter: blur(0) scale(1);
-    }
+.media-wrapper.revealed .reveal-img {
+  -webkit-filter: blur(0) scale(1);
+  filter: blur(0) scale(1);
+}
 
-    .media-wrapper.revealed .reveal-overlay {
-      opacity: 0;
-      pointer-events: none;
-    }
+.media-wrapper.revealed .reveal-overlay {
+  opacity: 0;
+  pointer-events: none;
+}
 
-    .heart-particle {
-      position: absolute;
-      pointer-events: none;
-      font-size: 2.5rem;
-      user-select: none;
-      z-index: 10;
-      animation: floatAndFade 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
+/* Heart particles burst */
+.heart-particle {
+  position: absolute;
+  pointer-events: none;
+  font-size: 1.5rem;
+  user-select: none;
+  z-index: 10;
+  animation: floatAndFade 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
 
-    @keyframes floatAndFade {
-      0% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(0.3) rotate(0deg);
-      }
-      50% {
-        opacity: 1;
-        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.3) rotate(var(--rot));
-      }
-      100% {
-        opacity: 0;
-        transform: translate(calc(-50% + var(--dx) * 1.4), calc(-50% + var(--dy) - 70px)) scale(0.8) rotate(calc(var(--rot) * 2));
-      }
-    }
+@keyframes floatAndFade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.3) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.3) rotate(var(--rot));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx) * 1.4), calc(-50% + var(--dy) - 70px)) scale(0.8) rotate(calc(var(--rot) * 2));
+  }
+}
 
-    .message {
-      font-size: 2rem;
-      font-weight: normal;
-      line-height: 1.6;
-      color: #4a5568;
-    }
+.message {
+  font-size: 1.5rem;
+  font-weight: normal;
+  line-height: 1.6;
+  color: #e2e8f0;
+}
   </style>
 </head>
 <body>
@@ -143,7 +164,7 @@
     <h1 class="title">Sorpresa per te</h1>
     
     <div class="media-wrapper" id="revealBox" onclick="toggleReveal(event)">
-      <img src="1.jpg" alt="Special Creation" class="reveal-img" />
+      <img src="d.jpg" alt="Special Creation" class="reveal-img" />
       
       <div class="reveal-overlay">
         <span>Tocca per rivelare✨</span>
