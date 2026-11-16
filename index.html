@@ -45,7 +45,7 @@
       width: 100%;
       height: 100%;
       z-index: 300;
-      touch-action: none; /* Prevents screen scrolling while scratching */
+      touch-action: none;
       cursor: grab;
       transition: opacity 0.9s ease;
     }
@@ -60,10 +60,10 @@
       background: rgba(11, 20, 30, 0.78);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
-      max-width: 420px;
+      max-width: 440px;
       width: 100%;
-      border-radius: 24px;
-      padding: 28px;
+      border-radius: 26px;
+      padding: 28px 24px;
       text-align: center;
       border: 2.5px solid rgba(52, 211, 153, 0.5);
       box-shadow:
@@ -75,26 +75,35 @@
 
     .title {
       font-family: 'Harlow Solid Italic', 'Satisfy', cursive, sans-serif;
-      font-size: 3rem;
+      font-size: clamp(3.3rem, 9.5vw, 4.1rem);
       font-weight: normal;
-      margin-bottom: 16px;
+      line-height: 1.15;
+      margin-bottom: 18px;
       color: #ffffff;
       text-shadow:
         0 0 10px rgba(52, 211, 153, 0.7),
         0 0 20px rgba(52, 211, 153, 0.3);
     }
 
-    /* --- Video & 3-Candle Reveal Box --- */
+    /* --- Video, Candles & Custom Play Button Box --- */
     .media-wrapper {
       position: relative;
       width: 100%;
-      border-radius: 16px;
+      min-height: 310px;
+      border-radius: 18px;
       overflow: hidden;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       background-color: #0d1621;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .media-wrapper.revealed {
+      min-height: 0;
     }
 
     .reveal-video {
@@ -111,19 +120,19 @@
       filter: blur(0) scale(1);
     }
 
-    /* --- Act 2: Interactive 3-Candle Overlay --- */
+    /* --- Act 2: Oversized 3-Candle Overlay --- */
     .candle-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(8, 15, 24, 0.58);
+      background: rgba(8, 15, 24, 0.62);
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 16px;
-      z-index: 3;
+      padding: 20px 14px;
+      z-index: 4;
       transition: opacity 0.7s ease;
     }
 
@@ -133,28 +142,29 @@
     }
 
     .candle-prompt {
-      font-size: 1.65rem;
+      font-size: clamp(2.1rem, 6.8vw, 2.65rem);
       font-weight: normal;
+      line-height: 1.25;
       color: #ffffff;
-      margin-bottom: 24px;
-      text-shadow: 0 0 12px rgba(251, 191, 36, 0.6);
+      margin-bottom: 22px;
+      text-shadow: 0 0 14px rgba(251, 191, 36, 0.7);
     }
 
     .candles-row {
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      gap: 28px;
-      padding-top: 22px;
+      gap: 40px;
+      padding-top: 46px;
     }
 
     .candle {
       position: relative;
-      width: 22px;
-      height: 68px;
+      width: 38px;
+      height: 116px;
       background: linear-gradient(180deg, #fef3c7 0%, #34d399 100%);
-      border-radius: 6px 6px 4px 4px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+      border-radius: 10px 10px 6px 6px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5), inset 0 3px 6px rgba(255, 255, 255, 0.65);
       cursor: pointer;
       border: none;
       transition: transform 0.2s ease;
@@ -168,11 +178,11 @@
     .candle::before {
       content: '';
       position: absolute;
-      top: -8px;
+      top: -13px;
       left: 50%;
       transform: translateX(-50%);
-      width: 2.5px;
-      height: 8px;
+      width: 4px;
+      height: 13px;
       background: #1e293b;
       border-radius: 2px;
     }
@@ -180,17 +190,17 @@
     /* Glowing Flame */
     .flame {
       position: absolute;
-      top: -32px;
+      top: -54px;
       left: 50%;
       transform: translateX(-50%);
-      width: 16px;
-      height: 24px;
+      width: 28px;
+      height: 42px;
       background: radial-gradient(ellipse at bottom, #ffffff 10%, #fde047 45%, #f59e0b 85%, transparent 100%);
       border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
       box-shadow:
-        0 0 12px #fbbf24,
-        0 0 26px rgba(251, 191, 36, 0.85),
-        0 0 42px rgba(52, 211, 153, 0.5);
+        0 0 16px #fbbf24,
+        0 0 34px rgba(251, 191, 36, 0.9),
+        0 0 54px rgba(52, 211, 153, 0.6);
       animation: flicker 0.9s infinite alternate ease-in-out;
       transition: opacity 0.25s ease, transform 0.25s ease;
     }
@@ -205,8 +215,8 @@
 
     @keyframes flicker {
       0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
-      50% { transform: translateX(-50%) scale(1.06, 0.95) rotate(2deg); }
-      100% { transform: translateX(-50%) scale(0.96, 1.05) rotate(-1deg); }
+      50% { transform: translateX(-50%) scale(1.07, 0.94) rotate(2deg); }
+      100% { transform: translateX(-50%) scale(0.95, 1.06) rotate(-1deg); }
     }
 
     .candle.blown .flame {
@@ -218,10 +228,10 @@
     /* Rising Smoke Puff */
     .smoke {
       position: absolute;
-      top: -28px;
+      top: -46px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 1.2rem;
+      font-size: 2.1rem;
       opacity: 0;
       pointer-events: none;
     }
@@ -231,16 +241,79 @@
     }
 
     @keyframes smokeRise {
-      0% { opacity: 0.9; transform: translate(-50%, 0) scale(0.6); }
-      100% { opacity: 0; transform: translate(-50%, -38px) scale(1.4); }
+      0% { opacity: 0.95; transform: translate(-50%, 0) scale(0.6); }
+      100% { opacity: 0; transform: translate(-50%, -48px) scale(1.5); }
+    }
+
+    /* --- Custom Video Play Button Overlay (Appears after candles) --- */
+    .video-play-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 15, 24, 0.28);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      z-index: 3;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .media-wrapper.revealed .video-play-overlay:not(.hidden) {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .play-circle {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: rgba(11, 20, 30, 0.85);
+      border: 2.5px solid rgba(52, 211, 153, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow:
+        0 0 20px rgba(52, 211, 153, 0.65),
+        0 0 40px rgba(251, 191, 36, 0.35);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .video-play-overlay:hover .play-circle,
+    .video-play-overlay:active .play-circle {
+      transform: scale(1.1);
+      box-shadow:
+        0 0 28px rgba(52, 211, 153, 0.9),
+        0 0 50px rgba(251, 191, 36, 0.5);
+    }
+
+    .play-triangle {
+      width: 0;
+      height: 0;
+      margin-left: 6px;
+      border-top: 16px solid transparent;
+      border-bottom: 16px solid transparent;
+      border-left: 26px solid #fde68a;
+      filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.7));
+    }
+
+    .play-label {
+      font-size: 1.75rem;
+      color: #ffffff;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9), 0 0 12px rgba(52, 211, 153, 0.7);
     }
 
     /* --- Confetti Particles --- */
     .confetti-piece {
       position: fixed;
       top: -15px;
-      width: 9px;
-      height: 14px;
+      width: 10px;
+      height: 16px;
       border-radius: 2px;
       z-index: 250;
       pointer-events: none;
@@ -258,13 +331,13 @@
       }
     }
 
-    /* --- Typewriter Message --- */
+    /* --- Oversized Typewriter Message --- */
     .message {
-      font-size: 1.5rem;
+      font-size: clamp(1.95rem, 6vw, 2.3rem);
       font-weight: normal;
-      line-height: 1.6;
+      line-height: 1.45;
       color: #e2e8f0;
-      min-height: 2.4em;
+      min-height: 2.8em;
     }
 
     /* --- Delayed Secret Note Button --- */
@@ -293,9 +366,9 @@
       background: rgba(11, 20, 30, 0.85);
       border: 1.5px solid rgba(52, 211, 153, 0.6);
       color: #ffffff;
-      font-size: 1.4rem;
-      width: 50px;
-      height: 50px;
+      font-size: 1.6rem;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
@@ -314,12 +387,12 @@
 
     .click-me-label {
       font-family: sans-serif;
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       color: #34d399;
-      margin-top: 4px;
+      margin-top: 5px;
       letter-spacing: 0.5px;
       text-transform: uppercase;
-      font-weight: 600;
+      font-weight: 700;
       text-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
     }
 
@@ -347,9 +420,9 @@
     .modal-content {
       background: rgba(11, 20, 30, 0.92);
       border: 2px solid rgba(52, 211, 153, 0.6);
-      border-radius: 20px;
-      padding: 26px;
-      max-width: 340px;
+      border-radius: 22px;
+      padding: 28px;
+      max-width: 360px;
       width: 100%;
       text-align: center;
       position: relative;
@@ -366,22 +439,22 @@
       position: absolute;
       top: 10px;
       right: 14px;
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       color: #94a3b8;
       cursor: pointer;
       line-height: 1;
     }
 
     .modal-title {
-      font-size: 1.8rem;
+      font-size: 2.3rem;
       font-weight: normal;
       color: #ffffff;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .joke-text {
       font-family: sans-serif;
-      font-size: 1.05rem;
+      font-size: 1.2rem;
       color: #e2e8f0;
       line-height: 1.5;
       margin-bottom: 16px;
@@ -391,7 +464,7 @@
       font-family: sans-serif;
       font-weight: bold;
       color: #34d399;
-      font-size: 1.1rem;
+      font-size: 1.25rem;
     }
   </style>
 </head>
@@ -407,10 +480,17 @@
     <h1 class="title">Buon Compleanno 💜</h1>
 
     <div class="media-wrapper" id="revealBox">
-      <!-- Replace video.mp4 with your exported MP4 filename -->
-      <video id="birthdayVideo" class="reveal-video" src="video.mp4" playsinline controls preload="metadata"></video>
+      <video id="birthdayVideo" class="reveal-video" src="video.mp4" playsinline preload="metadata"></video>
 
-      <!-- Act 2: 3 Glowing Candles Overlay -->
+      <!-- Custom Play Button Overlay (Shown after candles are blown out) -->
+      <div class="video-play-overlay" id="videoPlayOverlay" onclick="playBirthdayVideo()">
+        <div class="play-circle">
+          <div class="play-triangle"></div>
+        </div>
+        <span class="play-label">Guarda il video ✨</span>
+      </div>
+
+      <!-- Act 2: 3 Oversized Glowing Candles Overlay -->
       <div class="candle-overlay" id="candleOverlay">
         <p class="candle-prompt">Esprimi un desiderio e spegni le candeline ✨</p>
         <div class="candles-row">
@@ -450,7 +530,7 @@
 
   <script>
     /* ==========================================
-       1. STARDUST SCRATCH-OFF LAYER
+       1. STARDUST SCRATCH-OFF LAYER & SONG START
        ========================================== */
     const canvas = document.getElementById('scratchCanvas');
     const ctx = canvas.getContext('2d');
@@ -464,7 +544,6 @@
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
 
-      // Deep midnight aurora gradient base
       const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
       grad.addColorStop(0, '#060c14');
       grad.addColorStop(0.5, '#0b1926');
@@ -472,13 +551,12 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Fine shimmering emerald and gold stardust grains
       const starColors = [
-        'rgba(52, 211, 153, 0.85)',  // Emerald
-        'rgba(16, 185, 129, 0.65)',  // Deep Emerald
-        'rgba(251, 191, 36, 0.85)',  // Warm Gold
-        'rgba(253, 230, 138, 0.75)', // Soft Champagne Gold
-        'rgba(255, 255, 255, 0.6)'   // Starlight White
+        'rgba(52, 211, 153, 0.85)',
+        'rgba(16, 185, 129, 0.65)',
+        'rgba(251, 191, 36, 0.85)',
+        'rgba(253, 230, 138, 0.75)',
+        'rgba(255, 255, 255, 0.6)'
       ];
 
       const dustCount = Math.floor((canvas.width * canvas.height) / 140);
@@ -492,23 +570,37 @@
         ctx.fill();
       }
 
-      // Subtle glowing instruction text in the center
+      // Large two-line glowing instruction text scaled cleanly for phones
       ctx.save();
       ctx.textAlign = 'center';
       ctx.fillStyle = '#fde68a';
-      ctx.shadowColor = 'rgba(52, 211, 153, 0.8)';
-      ctx.shadowBlur = 14;
-      ctx.font = '28px "Harlow Solid Italic", "Satisfy", cursive';
-      ctx.fillText('Gratta la polvere di stelle ✨', canvas.width / 2, canvas.height / 2);
+      ctx.shadowColor = 'rgba(52, 211, 153, 0.85)';
+      ctx.shadowBlur = 18;
+      const fontSize = Math.min(56, Math.max(40, Math.floor(canvas.width * 0.115)));
+      ctx.font = `${fontSize}px "Harlow Solid Italic", "Satisfy", cursive`;
+      ctx.fillText('Gratta la polvere', canvas.width / 2, canvas.height / 2 - fontSize * 0.55);
+      ctx.fillText('di stelle ✨', canvas.width / 2, canvas.height / 2 + fontSize * 0.65);
       ctx.restore();
     }
 
-    function startBackgroundAudio() {
+    async function startBackgroundAudio() {
       if (audioStarted) return;
       audioStarted = true;
-      audio.currentTime = 70;
-      audio.volume = 1.0;
-      audio.play().catch(err => console.log('Audio waiting for interaction:', err));
+      try {
+        if (audio.readyState < 1) {
+          await new Promise((resolve, reject) => {
+            audio.addEventListener('loadedmetadata', resolve, { once: true });
+            audio.addEventListener('error', reject, { once: true });
+            audio.load();
+          });
+        }
+        audio.currentTime = 70;
+        audio.volume = 1.0;
+        await audio.play();
+      } catch (err) {
+        audioStarted = false;
+        console.log('Audio waiting for interaction:', err);
+      }
     }
 
     function getPointerPos(e) {
@@ -522,11 +614,10 @@
       if (scratchCleared) return;
       ctx.globalCompositeOperation = 'destination-out';
       ctx.beginPath();
-      ctx.arc(x, y, 44, 0, Math.PI * 2);
+      ctx.arc(x, y, 48, 0, Math.PI * 2);
       ctx.fill();
 
       strokeCounter++;
-      // Check cleared percentage every 12 moves for smooth 60fps performance
       if (strokeCounter % 12 === 0) {
         checkScratchProgress();
       }
@@ -536,13 +627,12 @@
       if (scratchCleared) return;
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
       let transparentPixels = 0;
-      // Sample every 16th pixel for fast mobile execution
       const step = 16 * 4;
       for (let i = 3; i < imageData.length; i += step) {
         if (imageData[i] === 0) transparentPixels++;
       }
       const totalSampled = imageData.length / step;
-      if ((transparentPixels / totalSampled) > 0.36) {
+      if ((transparentPixels / totalSampled) > 0.35) {
         scratchCleared = true;
         canvas.classList.add('cleared');
       }
@@ -595,6 +685,7 @@
     const totalCandles = 3;
 
     function blowCandle(candleEl) {
+      startBackgroundAudio();
       if (candleEl.classList.contains('blown')) return;
       candleEl.classList.add('blown');
       blownCount++;
@@ -608,19 +699,15 @@
 
     function triggerBirthdayReveal() {
       const box = document.getElementById('revealBox');
-      const video = document.getElementById('birthdayVideo');
-
       box.classList.add('revealed');
       launchConfetti();
       typeWriterMessage();
-
-      // Play the birthday video once candles are out
-      video.play().catch(err => console.log('Video play prevented:', err));
+      // Video remains paused with the custom Play button visible until he taps it!
     }
 
     function launchConfetti() {
       const colors = ['#34d399', '#fbbf24', '#c084fc', '#fde68a', '#ffffff'];
-      for (let i = 0; i < 75; i++) {
+      for (let i = 0; i < 80; i++) {
         const piece = document.createElement('span');
         piece.classList.add('confetti-piece');
         piece.style.left = Math.random() * 100 + 'vw';
@@ -634,16 +721,27 @@
     }
 
     /* ==========================================
-       3. AUDIO HANDOFF (VIDEO VS. OPETH TRACK)
+       3. CUSTOM VIDEO PLAY & SONG HANDOFF
        ========================================== */
     const videoEl = document.getElementById('birthdayVideo');
-    // Pauses Opeth while your video plays with sound, then resumes Opeth when the video ends
+    const videoPlayOverlay = document.getElementById('videoPlayOverlay');
+
+    function playBirthdayVideo() {
+      videoPlayOverlay.classList.add('hidden');
+      videoEl.controls = true;
+      videoEl.play();
+    }
+
+    // Pause Opeth while the video plays, and resume Opeth when the video finishes
     videoEl.addEventListener('play', () => {
-      if (!videoEl.muted && !audio.paused) {
+      videoPlayOverlay.classList.add('hidden');
+      if (!audio.paused) {
         audio.pause();
       }
     });
+
     videoEl.addEventListener('ended', () => {
+      videoPlayOverlay.classList.remove('hidden');
       if (audioStarted && audio.paused) {
         audio.play().catch(() => {});
       }
