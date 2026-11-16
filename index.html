@@ -92,7 +92,6 @@
       min-height: 310px;
       border-radius: 18px;
       overflow: hidden;
-      margin-bottom: 20px;
       background-color: #0d1621;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
@@ -331,13 +330,16 @@
       }
     }
 
-    /* --- Oversized Typewriter Message --- */
+    /* --- Oversized Typewriter Message (Appears after video ends) --- */
     .message {
       font-size: clamp(1.95rem, 6vw, 2.3rem);
       font-weight: normal;
       line-height: 1.45;
       color: #e2e8f0;
-      min-height: 2.8em;
+    }
+
+    .message.active {
+      margin-top: 20px;
     }
 
     /* --- Delayed Secret Note Button --- */
@@ -510,10 +512,10 @@
       </div>
     </div>
 
-    <p class="message"></p>
+    <p class="message" id="birthdayMessage"></p>
   </div>
 
-  <!-- Act 3: Delayed Secret Joke Button -->
+  <!-- Act 3: Delayed Secret Joke Button (Fades in after typewriter finishes) -->
   <div class="secret-btn-wrapper" id="secretBtnWrapper" onclick="toggleSecretModal()">
     <div class="secret-btn">💌</div>
     <span class="click-me-label">Click me</span>
@@ -523,8 +525,8 @@
     <div class="modal-content" onclick="event.stopPropagation()">
       <span class="modal-close" onclick="toggleSecretModal()">&times;</span>
       <h2 class="modal-title">Nota Segreta 😜</h2>
-      <p class="joke-text">Are you a syntax error?</p>
-      <p class="joke-punchline">Because my process stopped the second I saw you.🤪</p>
+      <p class="joke-text">Are we using end-to-end encryption??</p>
+      <p class="joke-punchline">Because nobody else can read what's between us.🤪</p>
     </div>
   </div>
 
@@ -570,7 +572,6 @@
         ctx.fill();
       }
 
-      // Large two-line glowing instruction text scaled cleanly for phones
       ctx.save();
       ctx.textAlign = 'center';
       ctx.fillStyle = '#fde68a';
@@ -701,8 +702,6 @@
       const box = document.getElementById('revealBox');
       box.classList.add('revealed');
       launchConfetti();
-      typeWriterMessage();
-      // Video remains paused with the custom Play button visible until he taps it!
     }
 
     function launchConfetti() {
@@ -721,7 +720,7 @@
     }
 
     /* ==========================================
-       3. CUSTOM VIDEO PLAY & SONG HANDOFF
+       3. CUSTOM VIDEO PLAY, SONG HANDOFF & TYPEWRITER TRIGGER
        ========================================== */
     const videoEl = document.getElementById('birthdayVideo');
     const videoPlayOverlay = document.getElementById('videoPlayOverlay');
@@ -732,7 +731,6 @@
       videoEl.play();
     }
 
-    // Pause Opeth while the video plays, and resume Opeth when the video finishes
     videoEl.addEventListener('play', () => {
       videoPlayOverlay.classList.add('hidden');
       if (!audio.paused) {
@@ -745,19 +743,22 @@
       if (audioStarted && audio.paused) {
         audio.play().catch(() => {});
       }
+      // Starts typing your birthday message only after he finishes watching the video!
+      typeWriterMessage();
     });
 
     /* ==========================================
        4. TYPEWRITER MESSAGE & DELAYED SECRET NOTE
        ========================================== */
-    const fullMessage = "Buon compleanno amore mio! Spero che questo giorno ti porti tutta la felicità che meriti, proprio come tu illumini la mia vita ogni giorno! 💜";
+    const fullMessage = "Buon compleanno amore mio! Spero che questo giorno ti porti tutta la felicità che meriti! 💜";
     let hasTyped = false;
 
     function typeWriterMessage() {
       if (hasTyped) return;
       hasTyped = true;
 
-      const msgEl = document.querySelector('.message');
+      const msgEl = document.getElementById('birthdayMessage');
+      msgEl.classList.add('active');
       msgEl.innerHTML = '';
       let i = 0;
 
