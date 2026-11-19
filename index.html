@@ -85,7 +85,7 @@
         0 0 20px rgba(52, 211, 153, 0.3);
     }
 
-    /* Interactive Secret Heart in the Title */
+    /* Interactive Beating Hearts (Title & Main Card) */
     .secret-heart {
       display: inline-block;
       cursor: pointer;
@@ -103,11 +103,11 @@
     @keyframes subtleHeartPulse {
       0%, 100% {
         transform: scale(1);
-        filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.5));
+        filter: drop-shadow(0 0 7px rgba(192, 132, 252, 0.6)) drop-shadow(0 0 14px rgba(52, 211, 153, 0.35));
       }
       50% {
-        transform: scale(1.1);
-        filter: drop-shadow(0 0 14px rgba(192, 132, 252, 0.95));
+        transform: scale(1.13);
+        filter: drop-shadow(0 0 16px rgba(192, 132, 252, 0.95)) drop-shadow(0 0 24px rgba(52, 211, 153, 0.65));
       }
     }
 
@@ -368,6 +368,46 @@
       margin-top: 20px;
     }
 
+    /* --- Twin Beating Hearts Row inside Main Card --- */
+    .card-hearts-row {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      gap: 34px;
+      margin-top: 16px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .card-hearts-row.show {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-heart-btn {
+      background: none;
+      border: none;
+      font-size: 2.35rem;
+      line-height: 1;
+      padding: 4px 8px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      animation: subtleHeartPulse 2.4s infinite ease-in-out;
+      transition: transform 0.25s ease;
+    }
+
+    .card-heart-btn.delayed-beat {
+      animation-delay: 1.2s;
+    }
+
+    .card-heart-btn:hover,
+    .card-heart-btn:active {
+      transform: scale(1.24);
+    }
+
     /* --- Delayed Secret Note Button --- */
     .secret-btn-wrapper {
       position: fixed;
@@ -424,14 +464,14 @@
       text-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
     }
 
-    /* --- Shared Modal Styling (Joke & Secret Heart Photo) --- */
+    /* --- Shared Modal Styling --- */
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.68);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(9px);
+      -webkit-backdrop-filter: blur(9px);
       justify-content: center;
       align-items: center;
       z-index: 200;
@@ -446,7 +486,7 @@
     }
 
     .modal-content {
-      background: rgba(11, 20, 30, 0.92);
+      background: rgba(11, 20, 30, 0.93);
       border: 2px solid rgba(52, 211, 153, 0.6);
       border-radius: 22px;
       padding: 28px;
@@ -454,7 +494,9 @@
       width: 100%;
       text-align: center;
       position: relative;
-      box-shadow: 0 0 30px rgba(52, 211, 153, 0.4);
+      box-shadow:
+        0 0 25px rgba(52, 211, 153, 0.4),
+        0 0 50px rgba(192, 132, 252, 0.2);
       transform: scale(0.8);
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
@@ -478,6 +520,7 @@
       font-weight: normal;
       color: #ffffff;
       margin-bottom: 14px;
+      text-shadow: 0 0 12px rgba(52, 211, 153, 0.55);
     }
 
     .joke-text {
@@ -495,23 +538,66 @@
       font-size: 1.25rem;
     }
 
-    /* Secret Heart Photo Styling */
-    .photo-modal-content {
-      max-width: 380px;
+    /* --- Title Heart Love Declaration Modal (Glowing Shimmer Text) --- */
+    .declaration-modal-content {
+      max-width: 400px;
+      padding: 32px 24px 28px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .glow-divider {
+      width: 65%;
+      height: 1.5px;
+      margin: 0 auto 18px;
+      background: linear-gradient(90deg, transparent, #34d399, #fde68a, #c084fc, transparent);
+      box-shadow: 0 0 10px rgba(52, 211, 153, 0.7);
+    }
+
+    .glow-divider.bottom {
+      margin: 20px auto 0;
+    }
+
+    .love-declaration-text {
+      font-size: clamp(1.75rem, 5.2vw, 2.05rem);
+      font-weight: normal;
+      line-height: 1.5;
+      color: #ffffff;
+      min-height: 4.5em;
+      animation: declarationPopGlow 3s infinite alternate ease-in-out;
+    }
+
+    @keyframes declarationPopGlow {
+      0% {
+        text-shadow:
+          0 0 8px rgba(52, 211, 153, 0.55),
+          0 0 18px rgba(192, 132, 252, 0.45);
+      }
+      100% {
+        text-shadow:
+          0 0 14px rgba(253, 230, 138, 0.85),
+          0 0 28px rgba(52, 211, 153, 0.75);
+      }
+    }
+
+    /* --- Media Modals (Photo & Cats Video) --- */
+    .media-modal-content {
+      max-width: 390px;
       padding: 24px 20px 20px;
     }
 
-    .secret-photo {
+    .modal-media-item {
       width: 100%;
       max-height: 60vh;
       object-fit: cover;
       border-radius: 14px;
-      border: 1.5px solid rgba(52, 211, 153, 0.5);
+      border: 1.5px solid rgba(52, 211, 153, 0.55);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
       display: block;
+      background-color: #0d1621;
     }
 
-    .photo-caption {
+    .media-caption {
       font-size: 1.65rem;
       color: #e2e8f0;
       margin-top: 14px;
@@ -529,7 +615,7 @@
 
   <div class="card">
     <h1 class="title">
-      Buon Compleanno <span class="secret-heart" onclick="toggleHeartPhotoModal()" title="Tocca il cuore">💜</span>
+      Buon Compleanno <span class="secret-heart" onclick="openLoveDeclarationModal()" title="Tocca il cuore">💜</span>
     </h1>
 
     <div class="media-wrapper" id="revealBox">
@@ -564,15 +650,52 @@
     </div>
 
     <p class="message" id="birthdayMessage"></p>
+
+    <!-- Twin Clickable Beating Hearts (Fade in after main typewriter finishes) -->
+    <div class="card-hearts-row" id="cardHeartsRow">
+      <button type="button" class="card-heart-btn" onclick="togglePhotoModal()" aria-label="Sorpresa 1" title="Tocca il cuore">💜</button>
+      <button type="button" class="card-heart-btn delayed-beat" onclick="toggleCatsVideoModal()" aria-label="Sorpresa 2" title="Tocca il cuore">💜</button>
+    </div>
   </div>
 
-  <!-- Act 3: Delayed Secret Joke Button (Fades in after typewriter finishes) -->
+  <!-- Act 3: Delayed Secret Joke Button -->
   <div class="secret-btn-wrapper" id="secretBtnWrapper" onclick="toggleSecretModal()">
     <div class="secret-btn">💌</div>
     <span class="click-me-label">Click me</span>
   </div>
 
-  <!-- Secret Joke Modal -->
+  <!-- 1. Title Heart Modal: Slow Typewriter Love Declaration -->
+  <div id="loveDeclarationModal" class="modal-overlay" onclick="closeLoveDeclarationModal()">
+    <div class="modal-content declaration-modal-content" onclick="event.stopPropagation()">
+      <span class="modal-close" onclick="closeLoveDeclarationModal()">&times;</span>
+      <h2 class="modal-title">Per te, amore mio 💜</h2>
+      <div class="glow-divider"></div>
+      <p class="love-declaration-text" id="loveDeclarationText"></p>
+      <div class="glow-divider bottom"></div>
+    </div>
+  </div>
+
+  <!-- 2. Main Card Heart 1 Modal: Your Photo (Upload as me.jpg) -->
+  <div id="photoModal" class="modal-overlay" onclick="togglePhotoModal()">
+    <div class="modal-content media-modal-content" onclick="event.stopPropagation()">
+      <span class="modal-close" onclick="togglePhotoModal()">&times;</span>
+      <h2 class="modal-title">Solo per te 🔥💜</h2>
+      <img src="me.jpg" alt="Solo per te" class="modal-media-item" />
+      <p class="media-caption">Un piccolo regalo solo per i tuoi occhi ✨</p>
+    </div>
+  </div>
+
+  <!-- 3. Main Card Heart 2 Modal: Cats Birthday Video (Upload as cats.mp4) -->
+  <div id="catsVideoModal" class="modal-overlay" onclick="closeCatsVideoModal()">
+    <div class="modal-content media-modal-content" onclick="event.stopPropagation()">
+      <span class="modal-close" onclick="closeCatsVideoModal()">&times;</span>
+      <h2 class="modal-title">Auguri dai mici 🐾💜</h2>
+      <video id="catsVideo" class="modal-media-item" src="cats.mp4" playsinline controls preload="metadata"></video>
+      <p class="media-caption">Anche noi ti auguriamo buon compleanno! 🐱✨</p>
+    </div>
+  </div>
+
+  <!-- 4. Bottom-Right Secret Joke Modal -->
   <div id="secretModal" class="modal-overlay" onclick="toggleSecretModal()">
     <div class="modal-content" onclick="event.stopPropagation()">
       <span class="modal-close" onclick="toggleSecretModal()">&times;</span>
@@ -582,18 +705,14 @@
     </div>
   </div>
 
-  <!-- Secret Heart Photo Modal -->
-  <div id="heartPhotoModal" class="modal-overlay" onclick="toggleHeartPhotoModal()">
-    <div class="modal-content photo-modal-content" onclick="event.stopPropagation()">
-      <span class="modal-close" onclick="toggleHeartPhotoModal()">&times;</span>
-      <h2 class="modal-title">Solo per te 💜</h2>
-      <!-- Upload your secret photo to GitHub as secret.jpg (or update the filename below) -->
-      <img src="secret.jpg" alt="Ricordo Segreto" class="secret-photo" />
-      <p class="photo-caption">Un piccolo segreto nascosto nel cuore ✨</p>
-    </div>
-  </div>
-
   <script>
+    /* ==========================================
+       EDIT YOUR MESSAGES HERE
+       ========================================== */
+    const fullMessage = "Buon compleanno amore mio! Spero che questo giorno ti porti tutta la felicità che meriti!";
+
+    const loveDeclarationMessage = "Dal primo momento in cui sei entrato nella mia vita, hai trasformato ogni giorno ordinario in qualcosa di straordinario. Anche a distanza, sei il mio pensiero più bello, il mio sorriso più vero e il posto in cui mi sento davvero a casa. Grazie per essere esattamente come sei. Ti amo infinitamente! 💜";
+
     /* ==========================================
        1. STARDUST SCRATCH-OFF LAYER & SONG START
        ========================================== */
@@ -783,7 +902,7 @@
     }
 
     /* ==========================================
-       3. CUSTOM VIDEO PLAY, SONG HANDOFF & TYPEWRITER TRIGGER
+       3. MAIN VIDEO PLAY, SONG HANDOFF & TYPEWRITER
        ========================================== */
     const videoEl = document.getElementById('birthdayVideo');
     const videoPlayOverlay = document.getElementById('videoPlayOverlay');
@@ -809,10 +928,6 @@
       typeWriterMessage();
     });
 
-    /* ==========================================
-       4. TYPEWRITER MESSAGE & SECRET MODALS
-       ========================================== */
-    const fullMessage = "Buon compleanno amore mio! Spero che questo giorno ti porti tutta la felicità che meriti! 💜";
     let hasTyped = false;
 
     function typeWriterMessage() {
@@ -831,19 +946,88 @@
         } else {
           clearInterval(timer);
           setTimeout(() => {
+            document.getElementById('cardHeartsRow').classList.add('show');
             document.getElementById('secretBtnWrapper').classList.add('show');
-          }, 500);
+          }, 450);
         }
       }, 40);
     }
 
-    function toggleSecretModal() {
-      document.getElementById('secretModal').classList.toggle('active');
+    /* ==========================================
+       4. TITLE HEART SLOW-TYPEWRITER LOVE DECLARATION
+       ========================================== */
+    let declarationTimer = null;
+    let declarationCompleted = false;
+
+    function openLoveDeclarationModal() {
+      startBackgroundAudio();
+      const modal = document.getElementById('loveDeclarationModal');
+      const textEl = document.getElementById('loveDeclarationText');
+      modal.classList.add('active');
+
+      // If already read once, show full text immediately; otherwise type slowly (75ms/char)
+      if (declarationCompleted) {
+        textEl.textContent = loveDeclarationMessage;
+        return;
+      }
+
+      clearInterval(declarationTimer);
+      textEl.textContent = '';
+      let idx = 0;
+
+      declarationTimer = setInterval(() => {
+        if (idx < loveDeclarationMessage.length) {
+          textEl.textContent += loveDeclarationMessage.charAt(idx);
+          idx++;
+        } else {
+          clearInterval(declarationTimer);
+          declarationCompleted = true;
+        }
+      }, 75);
     }
 
-    function toggleHeartPhotoModal() {
+    function closeLoveDeclarationModal() {
+      clearInterval(declarationTimer);
+      document.getElementById('loveDeclarationModal').classList.remove('active');
+    }
+
+    /* ==========================================
+       5. TWIN CARD HEARTS & SECRET JOKE MODALS
+       ========================================== */
+    function togglePhotoModal() {
       startBackgroundAudio();
-      document.getElementById('heartPhotoModal').classList.toggle('active');
+      document.getElementById('photoModal').classList.toggle('active');
+    }
+
+    const catsVideoEl = document.getElementById('catsVideo');
+
+    function toggleCatsVideoModal() {
+      startBackgroundAudio();
+      document.getElementById('catsVideoModal').classList.add('active');
+    }
+
+    function closeCatsVideoModal() {
+      catsVideoEl.pause();
+      document.getElementById('catsVideoModal').classList.remove('active');
+      if (audioStarted && audio.paused && videoEl.paused) {
+        audio.play().catch(() => {});
+      }
+    }
+
+    catsVideoEl.addEventListener('play', () => {
+      if (!audio.paused) {
+        audio.pause();
+      }
+    });
+
+    catsVideoEl.addEventListener('ended', () => {
+      if (audioStarted && audio.paused && videoEl.paused) {
+        audio.play().catch(() => {});
+      }
+    });
+
+    function toggleSecretModal() {
+      document.getElementById('secretModal').classList.toggle('active');
     }
   </script>
 
